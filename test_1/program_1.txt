@@ -1,7 +1,7 @@
 # Program to test all instructions written in machine language
 # Check the expected output and compare it with the one of your simulator
 # The format is: <instruction mem. address>: <OPCODE> <COMMA SEPARATED OPERANDS>;
-# All numers are decimal 
+# All numbers are decimal
 0: LI R1, 1;  # Load the value 1 into R1
 1: LD R2, R1;  # Load mem(1) into R2
 2: LD R1, R0;  # Load mem(0) into R1
