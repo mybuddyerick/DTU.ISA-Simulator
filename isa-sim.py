@@ -310,7 +310,19 @@ instructionMemory = InstructionMemory()
 print('\n---Start of simulation---')
 
 #####################################
-##      Write your code here      ##
-####################################
+###         Start of code         ###
+#####################################
+'''
+RUN THIS COMMAND TO EXECUTE THE PROGRAM:
+python 100 isa-sim.py test_1/data_mem_1.txt
+python 100 isa-sim.py test_2/data_mem_2.txt
+'''
+
+
+
+
+#####################################
+###          End of code          ###
+#####################################
 
 print('\n---End of simulation---\n')
