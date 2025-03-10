@@ -1,7 +1,8 @@
 import sys
 import re
+from unittest import case
 
-print("\nWelcome to the ISA simulator! - Designed by <YOUR NAMES HERE>")
+print("\nWelcome to the ISA simulator! - Designed by <Group 1>")
 
 if len(sys.argv) < 4:
     print('Too few arguments.')
@@ -313,10 +314,46 @@ print('\n---Start of simulation---')
 ###         Start of code         ###
 #####################################
 '''
-RUN THIS COMMAND TO EXECUTE THE PROGRAM:
-python 100 isa-sim.py test_1/data_mem_1.txt
-python 100 isa-sim.py test_2/data_mem_2.txt
+RUN FOR TEST 1:     <python3 isa-sim.py 1000 test_1/program_1 test_1/data_mem_1.txt>
+RUN FOR TEST 2:     <python3 isa-sim.py 1000 test_2/program_2 test_2/data_mem_2.txt>
 '''
+
+'''Here is defined the instruction-set architecture'''
+
+def execute_instruction(tokens, registers, memory):
+    match tokens:
+        # Arithmetic and Logic Instructions
+        case ["ADD", dest, src1, src2]:
+            registers[dest] = registers[src1] + registers[src2]
+
+        case ["SUB", dest, src1, src2]:
+            registers[dest] = registers[src1] - registers[src2]
+
+        case ["OR", dest, src1, src2]:
+            registers[dest] = registers[src1] | registers[src2]
+
+        case ["AND", dest, src1, src2]:
+            registers[dest] = registers[src1] & registers[src2]
+
+        case ["NOT", dest, src]:
+            # Bitwise NOT (one operand)
+            registers[dest] = ~registers[src]
+
+        # Data Instructions
+        case ["LI", reg, val]:
+            registers[reg] = int(val)
+
+        case ["LD", dest_reg, addr_reg]:
+            address = registers[addr_reg]
+            registers[dest_reg] = memory[address]
+
+        case ["SD", src_reg, addr_reg]:
+            address = registers[addr_reg]
+            memory[address] = registers[src_reg]
+
+        case _:
+            print(TypeError(f"Instruction not specified: {tokens}"))
+
 
 
 
