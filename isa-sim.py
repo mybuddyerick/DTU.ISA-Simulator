@@ -314,52 +314,67 @@ print('\n---Start of simulation---')
 ###         Start of code         ###
 #####################################
 '''
-RUN FOR TEST 1:     <python3 isa-sim.py 1000 test_1/program_1 test_1/data_mem_1.txt>
-RUN FOR TEST 2:     <python3 isa-sim.py 1000 test_2/program_2 test_2/data_mem_2.txt>
+RUN FOR TEST 1:     <python3 isa-sim.py 1000 test_1/program_1.txt test_1/data_mem_1.txt>
+RUN FOR TEST 2:     <python3 isa-sim.py 1000 test_2/program_2.txt test_2/data_mem_2.txt>
 '''
+
+do_i_do_another_cycle = True
 
 '''Here is defined the instruction-set architecture'''
 
-def execute_instruction(tokens, registers, memory):
-    match tokens:
-        # Arithmetic and Logic Instructions
-        case ["ADD", dest, src1, src2]:
-            registers[dest] = registers[src1] + registers[src2]
-
-        case ["SUB", dest, src1, src2]:
-            registers[dest] = registers[src1] - registers[src2]
-
-        case ["OR", dest, src1, src2]:
-            registers[dest] = registers[src1] | registers[src2]
-
-        case ["AND", dest, src1, src2]:
-            registers[dest] = registers[src1] & registers[src2]
-
-        case ["NOT", dest, src]:
-            # Bitwise NOT (one operand)
-            registers[dest] = ~registers[src]
-
-        # Data Instructions
-        case ["LI", reg, val]:
-            registers[reg] = int(val)
-
-        case ["LD", dest_reg, addr_reg]:
-            address = registers[addr_reg]
-            registers[dest_reg] = memory[address]
-
-        case ["SD", src_reg, addr_reg]:
-            address = registers[addr_reg]
-            memory[address] = registers[src_reg]
-
+def execute_instruction(address):
+    global program_counter, do_i_do_another_cycle
+    opcode = instructionMemory.read_opcode(address)
+    arg1 = instructionMemory.read_operand_1(address)
+    arg2 = instructionMemory.read_operand_2(address)
+    arg3 = instructionMemory.read_operand_3(address)
+    match opcode:
+        case "ADD":
+            registerFile.write_register(arg1, registerFile.read_register(arg2) + registerFile.read_register(arg3))
+        case "SUB":
+            registerFile.write_register(arg1, registerFile.read_register(arg2) - registerFile.read_register(arg3))
+        case "OR":
+            registerFile.write_register(arg1, registerFile.read_register(arg2) | registerFile.read_register(arg3))
+        case "AND":
+            registerFile.write_register(arg1, registerFile.read_register(arg2) & registerFile.read_register(arg3))
+        case "NOT":
+            registerFile.write_register(arg1, ~ registerFile.read_register(arg2))
+        case "LI":
+            registerFile.write_register(arg1, int(arg2))
+        case "LD":
+            registerFile.write_register(arg1, dataMemory.read_data(registerFile.read_register(arg2)))
+        case "SD":
+            dataMemory.write_data(registerFile.read_register(arg2), registerFile.read_register(arg1)) # where, what
+        case "JR":
+            program_counter = registerFile.read_register(arg1) -1
+        case "JEQ":
+            if registerFile.read_register(arg2) == registerFile.read_register(arg3):
+                program_counter = registerFile.read_register(arg1) -1
+        case "JLT":
+            if registerFile.read_register(arg2) < registerFile.read_register(arg3):
+                program_counter = registerFile.read_register(arg1) -1
+        case "NOP":
+            return
+        case "END":
+            do_i_do_another_cycle = False
         case _:
-            print(TypeError(f"Instruction not specified: {tokens}"))
+            print(TypeError(f"Instruction not specified: {address}"))
 
+def run():
+    global current_cycle, program_counter, do_i_do_another_cycle
+    while do_i_do_another_cycle and current_cycle < max_cycles:
+        instructionMemory.print_instruction(program_counter)
+        execute_instruction(program_counter)
+        current_cycle += 1
+        program_counter += 1
 
-
-
+run()
 
 #####################################
 ###          End of code          ###
 #####################################
 
 print('\n---End of simulation---\n')
+
+registerFile.print_all()
+dataMemory.print_used()
