@@ -1,0 +1,57 @@
+# Program to compute the Collatz Conjecture and track the longest sequence
+# The format is: <instruction mem. address>: <OPCODE> <COMMA SEPARATED OPERANDS>;
+# Initialization
+0: LI R1, 0; # Load start number from memory
+1: LI R2, 7; # Load max number to check from memory
+
+2: LI R3, 1; # Constant 1
+3: LI R4, 2; # Constant 2 (used for even check)
+4: LI R5, 3; # Constant 3 (used for odd-case addition)
+5: LI R6, 2; # Load longest sequence length from memory
+6: LI R7, 3; # Load number with longest sequence from memory
+7: LI R8, 14; # Store COLLATZ_LOOP address in R8
+8: LI R9, 25; # Store CHECK_MAX address in R9
+9: LI R10, 31; # Store NEXT address in R10
+10: LI R11, 19; # Store CONTINUE address in R11
+
+
+# MAIN_LOOP: Process each number from memory
+11: LI R12, 0; # Reset step counter
+12: LD R13, R1; # Copy start number
+
+
+# COLLATZ_LOOP: Compute the Collatz sequence
+13: JEQ R9, R13, R3; # If R13 == 1, jump to CHECK_MAX
+14: AND R14, R13, R4; # Check if even (R13 & 2)
+15: JEQ R14, R6, R10; # If R14 == 0, jump to EVEN_STEP
+
+# Odd case
+16: ADD R13, R13, R13; # R13 *= 2 (simulating multiplication by 2)
+17: ADD R13, R13, R13; # R13 *= 2 (simulating multiplication by 4)
+18: ADD R13, R13, R13; # R13 *= 2 (simulating multiplication by 8)
+19: SUB R13, R13, R13; # R13 -= R13 (resetting R13 to 0)
+20: ADD R13, R13, R5; # R13 += 3 (simulating multiplication by 3)
+21: ADD R13, R13, R3; # R13 += 1
+22: JR R11; # Jump to CONTINUE
+
+# EVEN_STEP: Handle even numbers
+23: SUB R13, R13, R3; # R13 -= 1 (simulating division by 2)
+24: SUB R13, R13, R3; # R13 -= 1 (simulating division by 2)
+
+# CONTINUE: Track steps and loop
+25: ADD R12, R12, R3; # Increase step counter
+26: JR R8; # Jump to COLLATZ_LOOP
+
+
+# CHECK_MAX: Store longest sequence if found
+#27: JLT R12, R6, R10; # If steps < longest found, skip to NEXT
+28: SD R1, 3; # Store number in memory
+29: SD R12, 2; # Store new longest sequence length in memory
+
+# NEXT: Increment number and repeat
+30: ADD R1, R1, R3; # Increment start number
+31: JLT R1, R2, R7; # Loop until R1 reaches max
+
+
+# END:
+32: END;

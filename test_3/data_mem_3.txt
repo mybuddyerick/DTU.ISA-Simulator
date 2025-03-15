@@ -1,0 +1,12 @@
+# Initial Data Memory Setup for Collatz Program
+
+0: 5;    # (start number)
+1: 0;    # for step counter
+2: 0;    # Store longest sequence found
+3: 0;    # Store number with longest sequence
+4: 1;    # Const 1 (used for comparison)
+5: 2;    # Const 2 (used for even check and division)
+6: 3;    # Const 3 (used for odd-case multiplication)
+7: 100;  # Upper bound for iteration
+8: 0;    # Temporary storage (for checking repeated values if needed)
+9: 0;    # Additional storage space (if cycle detection is added)
