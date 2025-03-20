@@ -1,6 +1,5 @@
 import sys
 import re
-from unittest import case
 
 print("\nWelcome to the ISA simulator! - Designed by <Group 1>")
 
@@ -65,16 +64,16 @@ class RegisterFile:
     This method prints the content of the entire register file.
     '''
     def print_all(self):
-        stringy = "Register file content:"
+        stringy = "Register file content: "
         # print('Register file content:')
-        for i in range(0, 11):
+        for i in range(0, 16):
             # self.print_register('R' + str(i))
             stringy += 'R' + str(i) + ": "
             if(self.registers['R'+str(i)] < 100):
                 stringy += " "
             if(self.registers['R'+str(i)] < 10):
                 stringy += " "
-            stringy += str(self.registers['R'+str(i)]) + " | "
+            stringy += str(self.registers['R'+str(i)]) + "|"
         print(stringy, end='\r')
 
 
@@ -372,7 +371,10 @@ def execute_instruction(address):
 def run():
     global current_cycle, program_counter, do_i_do_another_cycle
     while do_i_do_another_cycle and current_cycle < max_cycles:
-        instructionMemory.print_instruction(program_counter)
+        # print(f"{program_counter}: ", end='')
+        # instructionMemory.print_instruction(program_counter)
+        registerFile.print_all()
+
         execute_instruction(program_counter)
         current_cycle += 1
         program_counter += 1
