@@ -377,5 +377,6 @@ run()
 
 print('\n---End of simulation---\n')
 
+print(f"Completed in {current_cycle} cycles")
 registerFile.print_all()
 dataMemory.print_used()
