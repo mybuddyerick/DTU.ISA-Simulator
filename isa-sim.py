@@ -65,9 +65,17 @@ class RegisterFile:
     This method prints the content of the entire register file.
     '''
     def print_all(self):
-        print('Register file content:')
-        for i in range(0, 16):
-            self.print_register('R' + str(i))
+        stringy = "Register file content:"
+        # print('Register file content:')
+        for i in range(0, 11):
+            # self.print_register('R' + str(i))
+            stringy += 'R' + str(i) + ": "
+            if(self.registers['R'+str(i)] < 100):
+                stringy += " "
+            if(self.registers['R'+str(i)] < 10):
+                stringy += " "
+            stringy += str(self.registers['R'+str(i)]) + " | "
+        print(stringy, end='\r')
 
 
 '''
