@@ -317,15 +317,6 @@ instructionMemory = InstructionMemory()
 
 print('\n---Start of simulation---')
 
-#####################################
-###         Start of code         ###
-#####################################
-'''
-RUN FOR TEST 1:     <python3 isa-sim.py 10000 test_1/program_1.txt test_1/data_mem_1.txt>
-RUN FOR TEST 2:     <python3 isa-sim.py 10000 test_2/program_2.txt test_2/data_mem_2.txt>
-RUN FOR TEST 3:     <python3 isa-sim.py 10000 test_3/program_3.txt test_3/data_mem_3.txt>
-'''
-
 do_i_do_another_cycle = True
 
 '''Here is defined the instruction-set architecture'''
@@ -380,10 +371,6 @@ def run():
         program_counter += 1
 
 run()
-
-#####################################
-###          End of code          ###
-#####################################
 
 print('\n---End of simulation---\n')
 

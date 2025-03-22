@@ -35,7 +35,7 @@
 23: JLT R8, R0, R1;
 24: ADD R1, R1, R6;
 
-# --- i++ & loop for next in sequence ---
+# --- i+= & loop for next in sequence ---
 25: ADD R3, R3, R9;
 26: LI R8, 8;
 27: JR R8;
