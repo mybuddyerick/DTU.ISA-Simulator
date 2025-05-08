@@ -7,7 +7,7 @@
 This is an implementation of an instruction-set architecture (or ISA) simulator in Python.  
 Made by `Group 1`.  
 
-⚠️ **Register 0 should always be 0** for this simulator to work!
+**Register 0 should always be 0** for this simulator to work!
 
 Once the execution ends, the simulator prints the final state of the register file and the data memory to the console.  
 
@@ -24,6 +24,6 @@ Run with:
 
 ### Test 3 - Collatz Conjecture  
 This test simulates the Collatz sequence for a list of input numbers. It finds the number (Address: 254) that takes the most steps to reach 1 (Address: 255) and stores the result in memory.  
-⚠️ **Do not use numbers equal or higher than 27**, it will overflow the simulator and results will not be accurate.  
+**Do not use numbers equal or higher than 27**, it will overflow the simulator and results will not be accurate.  
 Run with:  
 ```python3 isa-sim.py 10000 test_3/program_3.txt test_3/data_mem_3.txt```
