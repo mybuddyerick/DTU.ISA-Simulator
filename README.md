@@ -1,4 +1,9 @@
-# ISA-simulator
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/9ea39d49-e732-4c1a-9bd7-f9d72f1e6d4d" alt="Logo" height="140">
+</div>
+
+<h1 align="center">02135 Introduction to Cyber Systems - ISA simulator Assignment</h1>
+
 This is an implementation of an instruction-set architecture (or ISA) simulator in Python.  
 Made by `Group 1`.  
 
